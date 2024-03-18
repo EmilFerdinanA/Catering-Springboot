@@ -72,14 +72,23 @@ public class OrderServiceImpl implements OrderService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Order findById(String id) {
         return orderRepository.findOrder(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "failed to find order"));
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Order> findAll() {
         List<Order> orders = orderRepository.findAllOrder();
         return orders;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void delete(String id) {
+        orderRepository.findOrder(id);
+        orderRepository.deleteOrder(id);
     }
 }

@@ -68,4 +68,16 @@ public class OrderController {
 
         return ResponseEntity.ok(response);
     }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<CommonResponse> deleteOrder(@PathVariable(name = "id") String id) {
+        orderService.delete(id);
+
+        CommonResponse response = CommonResponse.builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("successfully delete order")
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
 }

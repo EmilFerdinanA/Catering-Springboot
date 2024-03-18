@@ -27,4 +27,8 @@ public interface OrderRepository extends JpaRepository<Order, String> {
 
     @Query(value = "SELECT * FROM m_order", nativeQuery = true)
     List<Order> findAllOrder();
+
+    @Modifying
+    @Query(value = "DELETE FROM m_order WHERE id = :id", nativeQuery = true)
+    void deleteOrder(@Param("id") String id);
 }
