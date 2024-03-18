@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -23,4 +24,7 @@ public interface OrderRepository extends JpaRepository<Order, String> {
 
     @Query(value = "SELECT * FROM m_order WHERE id = :id", nativeQuery = true)
     Optional<Order> findOrder(@Param("id") String id);
+
+    @Query(value = "SELECT * FROM m_order", nativeQuery = true)
+    List<Order> findAllOrder();
 }

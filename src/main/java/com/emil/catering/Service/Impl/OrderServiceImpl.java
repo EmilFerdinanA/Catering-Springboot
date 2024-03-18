@@ -11,10 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -80,5 +77,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order findById(String id) {
         return orderRepository.findOrder(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "failed to find order"));
+    }
+
+    @Override
+    public List<Order> findAll() {
+        List<Order> orders = orderRepository.findAllOrder();
+        return orders;
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/api/orders")
 @RequiredArgsConstructor
@@ -46,6 +48,19 @@ public class OrderController {
         Order order = orderService.findById(id);
 
         CommonResponse<Order> response = CommonResponse.<Order>builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("successfully find order")
+                .data(order)
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<CommonResponse<List<Order>>> findAll() {
+        List<Order> order = orderService.findAll();
+
+        CommonResponse<List<Order>> response = CommonResponse.<List<Order>>builder()
                 .statusCode(HttpStatus.OK.value())
                 .message("successfully find order")
                 .data(order)
