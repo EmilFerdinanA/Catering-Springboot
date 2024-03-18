@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.Optional;
+
 @Repository
 public interface OrderRepository extends JpaRepository<Order, String> {
     @Modifying
@@ -18,4 +20,7 @@ public interface OrderRepository extends JpaRepository<Order, String> {
     @Modifying
     @Query(value = "UPDATE m_order SET name = :name, phone = :phone, order_date = :orderDate, order_for_date = :orderForDate, time = :time, qty = :qty,  note = :note WHERE id = :id", nativeQuery = true)
     void updateOrder(@Param("id") String id, @Param("name") String name, @Param("phone") String phone, @Param("orderDate") Date orderDate, @Param("orderForDate") Date orderForDate, @Param("time") LocalTime time, @Param("qty") Integer qty, @Param("note") String note);
+
+    @Query(value = "SELECT * FROM m_order WHERE id = :id", nativeQuery = true)
+    Optional<Order> findOrder(@Param("id") String id);
 }

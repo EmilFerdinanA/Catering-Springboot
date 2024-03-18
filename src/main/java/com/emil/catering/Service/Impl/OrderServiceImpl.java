@@ -12,6 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -73,5 +75,10 @@ public class OrderServiceImpl implements OrderService {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "failed to update order");
         }
+    }
+
+    @Override
+    public Order findById(String id) {
+        return orderRepository.findOrder(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "failed to find order"));
     }
 }

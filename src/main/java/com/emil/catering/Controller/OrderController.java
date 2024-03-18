@@ -40,4 +40,17 @@ public class OrderController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<CommonResponse<Order>> findById(@PathVariable(name = "id") String id) {
+        Order order = orderService.findById(id);
+
+        CommonResponse<Order> response = CommonResponse.<Order>builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("successfully find order")
+                .data(order)
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
 }
