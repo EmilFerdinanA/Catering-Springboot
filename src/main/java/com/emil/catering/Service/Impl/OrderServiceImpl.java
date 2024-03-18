@@ -49,29 +49,27 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Order update(OrderRequest order) {
-        try {
-            String id = order.getId();
-            String name = order.getName();
-            String phone = order.getPhone();
-            Date orderDate = order.getOrderDate();
-            Date orderForDate = order.getOrderForDate();
-            LocalTime time = LocalTime.parse(order.getTime());
-            Integer qty = order.getQty();
-            String note = order.getNote();
-            orderRepository.updateOrder(id, name, phone, orderDate, orderForDate, time, qty, note);
-            return Order.builder()
-                    .id(id)
-                    .name(name)
-                    .phone(phone)
-                    .orderDate(orderDate)
-                    .orderForDate(orderForDate)
-                    .time(time)
-                    .qty(qty)
-                    .note(note)
-                    .build();
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "failed to update order");
-        }
+        orderRepository.findOrder(order.getId());
+
+        String id = order.getId();
+        String name = order.getName();
+        String phone = order.getPhone();
+        Date orderDate = order.getOrderDate();
+        Date orderForDate = order.getOrderForDate();
+        LocalTime time = LocalTime.parse(order.getTime());
+        Integer qty = order.getQty();
+        String note = order.getNote();
+        orderRepository.updateOrder(id, name, phone, orderDate, orderForDate, time, qty, note);
+        return Order.builder()
+                .id(id)
+                .name(name)
+                .phone(phone)
+                .orderDate(orderDate)
+                .orderForDate(orderForDate)
+                .time(time)
+                .qty(qty)
+                .note(note)
+                .build();
     }
 
     @Override
